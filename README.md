@@ -30,13 +30,17 @@ pnpm install --config.auto-install-peers=false
 
 > 改过依赖或入口路径后，宿主会缓存裸模块解析，**需要重启 App** 才能生效。
 
-### 从 GitHub 安装
+### 从 GitHub 安装（推荐）
+
+在 DSH 的 Plugins → Add plugin 填：
 
 ```
 github:douglarek/dsh-subagent-agy
 ```
 
-Git 安装时 pnpm 会正常安装 `dependencies`，不需要第 1 步。
+pnpm 会连同 `dependencies`（`@agentclientprotocol/sdk`、`zod`）一起安装到 profile，不需要第 1 步的包内安装。
+
+**更新与切换安装方式后需要重启 App**：宿主的模块加载器会缓存包的解析路径，热重载不足以切到新副本。
 
 ## 工具参数
 
