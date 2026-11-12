@@ -95,3 +95,7 @@ pnpm 会连同 `dependencies`（`@agentclientprotocol/sdk`、`zod`）一起安�
 node --check provider/index.js   # 语法检查
 # 改动后在 DSH Plugins 页关/开一次该 bundle 即可热重载（改依赖则需重启）
 ```
+
+## License
+
+MIT
