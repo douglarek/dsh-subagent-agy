@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Antigravity subagent",
+    "description": "Delegate one task to Antigravity (agy) through its ACP server, reusing its native login and settings."
+  }
+}

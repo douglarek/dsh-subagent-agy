@@ -1,0 +1,59 @@
+{
+  "name": "@douglarek/dsh-subagent-agy",
+  "version": "0.1.0",
+  "description": "Antigravity (agy) subagent provider for DeepSeek Harness, over ACP",
+  "type": "module",
+  "private": false,
+  "keywords": [
+    "dsh",
+    "dsh-bundle",
+    "deepseek-harness",
+    "antigravity",
+    "agy",
+    "acp",
+    "subagent"
+  ],
+  "icon": "./icon.svg",
+  "files": [
+    "provider/index.js",
+    "tool/index.js",
+    "cordis.patch.yml",
+    "icon.svg",
+    "locale/*.json",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@agentclientprotocol/sdk": "2.6.0",
+    "zod": "^4.6.7"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "*",
+    "@deepseek-ai/dsh-agent": "*",
+    "@deepseek-ai/dsh-brand": "*",
+    "@deepseek-ai/dsh-llm": "*",
+    "@deepseek-ai/dsh-session": "*",
+    "@deepseek-ai/dsh-subagent": "*",
+    "@deepseek-ai/dsh-subprocess": "*",
+    "@deepseek-ai/dsh-timeout": "*",
+    "@deepseek-ai/schemastery": "*",
+    "@deepseek-ai/dsh-tools": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/douglarek/dsh-subagent-agy.git"
+  },
+  "main": "provider/index.js",
+  "exports": {
+    ".": "./provider/index.js",
+    "./provider": "./provider/index.js",
+    "./tool": "./tool/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  }
+}

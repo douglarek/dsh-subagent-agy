@@ -1,0 +1,19 @@
+# Provider: Antigravity CLI over its ACP stdio server.
+- insert:
+    - id: subagent-agy
+      name: '@douglarek/dsh-subagent-agy/provider'
+      config:
+        providerName: agy
+        command: /Users/admin/.local/bin/agy
+        args: ['acp']
+        permission: allow
+        model: ''
+        # Reuse one Antigravity conversation per session key (the tool's `session`
+        # argument, or this DSH session when omitted).
+        reuseSession: true
+        transcriptDir: ''
+    - id: tool-subagent-agy
+      name: '@douglarek/dsh-subagent-agy/tool'
+      config:
+        provider: agy
+        toolName: subagent_agy

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Antigravity 子智能体",
+    "description": "通过 ACP 把单个任务委派给 Antigravity（agy），复用其原生登录与设置。"
+  }
+}

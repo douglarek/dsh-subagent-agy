@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Antigravity subagent">
+  <defs>
+    <linearGradient id="agy-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f7cff"/>
+      <stop offset="1" stop-color="#1c2f8a"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#agy-bg)"/>
+  <path d="M32 13 L44 45 H37.6 L32 30.4 L26.4 45 H20 Z" fill="#ffffff"/>
+  <path d="M26.6 36.4 H37.4 L39 41 H25 Z" fill="#c9d6ff"/>
+  <circle cx="47" cy="17" r="3.4" fill="#9ff2c4"/>
+</svg>
