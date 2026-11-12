@@ -18,12 +18,12 @@
 
 ```bash
 # 1) 包内先装自己的依赖（link 安装不会装包内依赖）
-cd /Users/admin/work/ai-works/dsh-subagent-agy
+cd ~/work/ai-works/dsh-subagent-agy
 pnpm install --config.auto-install-peers=false
 # 依赖：@agentclientprotocol/sdk@2.6.0 + zod@^4（2.x 把 zod 声明为 peer，必须显式提供）
 
 # 2) 在 DSH 的 Plugins → Add plugin 填这个包的绝对路径
-/Users/admin/work/ai-works/dsh-subagent-agy
+~/work/ai-works/dsh-subagent-agy
 ```
 
 组合层插入两行：`@douglarek/dsh-subagent-agy/provider`（ACP provider）和 `@douglarek/dsh-subagent-agy/tool`（`subagent_agy` 工具，带 `session` 参数）。
@@ -39,6 +39,8 @@ github:douglarek/dsh-subagent-agy
 ```
 
 pnpm 会连同 `dependencies`（`@agentclientprotocol/sdk`、`zod`）一起安装到 profile，不需要第 1 步的包内安装。
+
+宿主导出的 `@deepseek-ai/*`（cordis、schemastery、`dsh-subagent`、`dsh-tools` 等）由 DSH 进程自己解析，所以包内**不声明** `peerDependencies`：一旦声明，pnpm 的 `auto-install-peers=true` 或 npm 7+ 会把这些宿主包再装一份进 profile，等于换了第二个 Cordis 单例，比告警本身糟得多。安装日志若仍出现 `missing peer @deepseek-ai/*`，那是旧版本包，升级即可。
 
 **更新与切换安装方式后需要重启 App**：宿主的模块加载器会缓存包的解析路径，热重载不足以切到新副本。
 
@@ -60,7 +62,7 @@ pnpm 会连同 `dependencies`（`@agentclientprotocol/sdk`、`zod`）一起安�
 | 字段 | 默认 | 说明 |
 | --- | --- | --- |
 | `providerName` | `agy` | 注册在 `ctx.subagents` 上的名字 |
-| `command` | `/Users/admin/.local/bin/agy` | ACP 可执行文件；换 `agy` 用 PATH |
+| `command` | `agy` | ACP 可执行文件，默认走 PATH。从 GUI 启动的 App 通常没有 `~/.local/bin`，装在那里就填绝对路径（见下方「常见问题」） |
 | `args` | `['acp']` | 可追加 `--sandbox`、`--agent <name>` |
 | `permission` | `allow` | `allow` 自动选第一个 allow 选项；`reject` 一律拒绝 |
 | `model` | `''` | 非空时每次运行前 `session/set_model` |
@@ -81,6 +83,31 @@ pnpm 会连同 `dependencies`（`@agentclientprotocol/sdk`、`zod`）一起安�
 ```
 
 `tail -f latest.md` 可近实时查看；DSH 文件预览打开 `.md` 即可阅读。
+
+## 常见问题
+
+### 委派立刻失败：`spawn agy ENOENT`
+
+`cordis.patch.yml` 里的 `command` 在**宿主的** PATH 上找不到（GUI 启动的 App 通常不含 `~/.local/bin`）。把绝对路径写进 profile 补丁层覆盖 bundle 默认值——`~/.dsh/profiles/<profile>/cordis.patch.yml`，它在所有 bundle 层之后应用：
+
+```yaml
+- id: subagent-agy
+  name: '@douglarek/dsh-subagent-agy/provider'
+  config:
+    providerName: agy
+    command: /home/<you>/.local/bin/agy
+    args: ['acp']
+    permission: allow
+    model: ''
+    reuseSession: true
+    transcriptDir: ''
+```
+
+改完重启 App。二进制本身可先用 `agy --version` 和一次 `agy acp` 的 `initialize` 握手确认。
+
+### 安装日志出现 `missing peer @deepseek-ai/*`
+
+那是 0.1.0 及更早版本的包声明的宿主 peer，升级到 0.1.1+ 即消失；道理见「从 GitHub 安装」一节。
 
 ## 已知限制
 
