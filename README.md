@@ -14,22 +14,6 @@
 
 ## 安装
 
-### 本地 link（开发）
-
-```bash
-# 1) 包内先装自己的依赖（link 安装不会装包内依赖）
-cd ~/work/ai-works/dsh-subagent-agy
-pnpm install --config.auto-install-peers=false
-# 依赖：@agentclientprotocol/sdk@2.6.0 + zod@^4（2.x 把 zod 声明为 peer，必须显式提供）
-
-# 2) 在 DSH 的 Plugins → Add plugin 填这个包的绝对路径
-~/work/ai-works/dsh-subagent-agy
-```
-
-组合层插入两行：`@douglarek/dsh-subagent-agy/provider`（ACP provider）和 `@douglarek/dsh-subagent-agy/tool`（`subagent_agy` 工具，带 `session` 参数）。
-
-> 改过依赖或入口路径后，宿主会缓存裸模块解析，**需要重启 App** 才能生效。
-
 ### 从 GitHub 安装（推荐）
 
 在 DSH 的 Plugins → Add plugin 填：
@@ -37,10 +21,6 @@ pnpm install --config.auto-install-peers=false
 ```
 github:douglarek/dsh-subagent-agy
 ```
-
-pnpm 会连同 `dependencies`（`@agentclientprotocol/sdk`、`zod`）一起安装到 profile，不需要第 1 步的包内安装。
-
-宿主导出的 `@deepseek-ai/*`（cordis、schemastery、`dsh-subagent`、`dsh-tools` 等）由 DSH 进程自己解析，所以包内**不声明** `peerDependencies`：一旦声明，pnpm 的 `auto-install-peers=true` 或 npm 7+ 会把这些宿主包再装一份进 profile，等于换了第二个 Cordis 单例，比告警本身糟得多。安装日志若仍出现 `missing peer @deepseek-ai/*`，那是旧版本包，升级即可。
 
 **更新与切换安装方式后需要重启 App**：宿主的模块加载器会缓存包的解析路径，热重载不足以切到新副本。
 
@@ -105,23 +85,11 @@ pnpm 会连同 `dependencies`（`@agentclientprotocol/sdk`、`zod`）一起安�
 
 改完重启 App。二进制本身可先用 `agy --version` 和一次 `agy acp` 的 `initialize` 握手确认。
 
-### 安装日志出现 `missing peer @deepseek-ai/*`
-
-那是 0.1.0 及更早版本的包声明的宿主 peer，升级到 0.1.1+ 即消失；道理见「从 GitHub 安装」一节。
-
 ## 已知限制
 
 1. **父会话里没有实时流**：DSH 外部 run 没有进度通道，流式内容只能看 transcript。
 2. **子智能体列表里不可点开**：外部 run 没有本地 Session（`mode: 'external'`），core UI 的会话历史入口不适用。
 3. **权限只有两档**：`allow` / `reject`。
-4. **同键并发不安全**：见上文并发语义。
-
-## 开发
-
-```bash
-node --check provider/index.js   # 语法检查
-# 改动后在 DSH Plugins 页关/开一次该 bundle 即可热重载（改依赖则需重启）
-```
 
 ## License
 
