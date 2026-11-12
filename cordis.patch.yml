@@ -4,7 +4,10 @@
       name: '@douglarek/dsh-subagent-agy/provider'
       config:
         providerName: agy
-        command: /Users/admin/.local/bin/agy
+        # Bare name resolves through PATH; point at an absolute path when the
+        # GUI app's PATH does not include the install dir (e.g.
+        # ~/.local/bin/agy on Linux, /Users/<you>/.local/bin/agy on macOS).
+        command: agy
         args: ['acp']
         permission: allow
         model: ''
