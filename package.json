@@ -1,6 +1,6 @@
 {
   "name": "@douglarek/dsh-subagent-agy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Antigravity (agy) subagent provider for DeepSeek Harness, over ACP",
   "type": "module",
   "private": false,
@@ -34,18 +34,6 @@
   "dependencies": {
     "@agentclientprotocol/sdk": "2.6.0",
     "zod": "^4.6.7"
-  },
-  "peerDependencies": {
-    "@deepseek-ai/cordis": "*",
-    "@deepseek-ai/dsh-agent": "*",
-    "@deepseek-ai/dsh-brand": "*",
-    "@deepseek-ai/dsh-llm": "*",
-    "@deepseek-ai/dsh-session": "*",
-    "@deepseek-ai/dsh-subagent": "*",
-    "@deepseek-ai/dsh-subprocess": "*",
-    "@deepseek-ai/dsh-timeout": "*",
-    "@deepseek-ai/schemastery": "*",
-    "@deepseek-ai/dsh-tools": "*"
   },
   "repository": {
     "type": "git",
