@@ -12,6 +12,18 @@
 | **用量记录** | `session/prompt` 返回的 input/output/cache/thought token 写入运行元数据 |
 | **重放隔离** | `session/load` 会重放历史；重放只进 JSONL，不进最终答案 |
 
+## 插件索引
+
+这个插件已收录在 [dsh-plugin-index](https://github.com/douglarek/dsh-plugin-index)。
+
+索引 URL：
+
+```text
+https://raw.githubusercontent.com/douglarek/dsh-plugin-index/main/index.json
+```
+
+更新 `package.json` 版本时，需要同步在索引里追加新版本和 release commit，否则 Discover 仍显示旧版本。
+
 ## 安装
 
 ### 从 GitHub 安装（推荐）
